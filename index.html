@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="img/chat.png">
+    <title>服事提醒通知</title>
+    <style>
+        body {font-family: Microsoft JhengHei;}
+        *{font-family: Microsoft JhengHei;}
+        .btn {
+            /* background-color: DodgerBlue; */
+            background-color:#2196F3;
+            border: none;
+            color: white;
+            padding: 12px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            margin:15px 0;
+            border-radius: 8px;            
+        }
+
+        /* Darker background on mouse-over 
+        .btn:hover {
+            background-color: RoyalBlue;
+        }*/
+        /* Style the tab */
+        .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+        }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        font-size: 17px;        
+        }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+        background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+        background-color: #ccc;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+        }
+
+        /* Style the close button */
+        .topright {
+        float: right;
+        cursor: pointer;
+        font-size: 28px;
+        }
+
+        .topright:hover {color: red;}
+        
+        /* The container */
+        .container {
+        display: inline-block;
+        position: relative;
+        padding-left: 25px;
+        padding-right: 10px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 16px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        }
+
+        /* Hide the browser's default radio button */
+        .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        }
+
+        /* Create a custom radio button */
+        .checkmark {
+        position: absolute;
+        top: 2px;
+        left: 0;
+        height: 20px;
+        width: 20px;
+        background-color: #eee;
+        border-radius: 50%;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .container:hover input ~ .checkmark {
+        background-color: #ccc;
+        }
+
+        /* When the radio button is checked, add a blue background */
+        .container input:checked ~ .checkmark {
+        background-color: #2196F3;
+        }
+
+        /* Create the indicator (the dot/circle - hidden when not checked) */
+        .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+        }
+
+        /* Show the indicator (dot/circle) when checked */
+        .container input:checked ~ .checkmark:after {
+        display: block;
+        }
+
+        /* Style the indicator (dot/circle) */
+        .container .checkmark:after {
+            top: 6px;
+            left: 6px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: white;
+        }
+
+        .servicetext{
+            display: block;
+            padding: 15px 0;
+            margin: 15px 0;
+            width: 70%;            
+            font-size: 14px;
+        }
+        @media only screen and (max-width: 600px) {
+            .servicetext {
+                width: 100%;
+        }
+}
+
+
+    </style>
+</head>
+<body>    
+    <div class="tab">
+        <button class="tablinks" onclick="openCity(event, 'pray')" id="defaultOpen">禱告會</button>        
+        <button class="tablinks" onclick="openCity(event, 'service2')">主日服事(週日)</button>
+        <button class="tablinks" onclick="openCity(event, 'service1')">主日服事(週六)</button>
+    </div>
+    
+    <div id="pray" class="tabcontent">
+        <span onclick="this.parentElement.style.display='none'" class="topright">&times</span>
+        <h3>禱告會</h3>
+        <p>請選擇服事崗位</p>
+        <div>
+            <label class="container">攝影
+                    <input type="radio" checked="checked" name="radio_pray" value="主日攝影">
+                    <span class="checkmark"></span>
+            </label>           
+            <label class="container">導播
+                    <input type="radio" name="radio_pray" value="導播">
+                    <span class="checkmark"></span>
+            </label>
+        </div>                  
+        <button class="btn" onclick="PrintText('pray','radio_pray','','service_text_pray')"> 取得文字</button>
+        <textarea id="service_text_pray" rows="10"  class="servicetext " ></textarea> 
+    </div>                
+    <div id="service2" class="tabcontent">
+        <span onclick="this.parentElement.style.display='none'" class="topright">&times</span>
+        <h3>主日服事(周日)</h3>
+        <p>請選擇服事崗位</p>
+        <div>
+            <label class="container">主日攝影
+                    <input type="radio" checked="checked" name="radio2" value="主日攝影">
+                    <span class="checkmark"></span>
+            </label>
+            <label class="container">主日剪輯
+                    <input type="radio" name="radio2" value="主日剪輯">
+                    <span class="checkmark"></span>
+            </label>
+            <label class="container">導播
+                    <input type="radio" name="radio2" value="導播">
+                    <span class="checkmark"></span>
+            </label>
+        </div>
+        <p>請選擇服事時間</p>
+        <div>
+            <label class="container">08:00
+                    <input type="radio" checked="checked" name="sun_meet_time" value="sun1">
+                    <span class="checkmark"></span>
+            </label>
+            <label class="container">10:30
+                    <input type="radio" name="sun_meet_time" value="sun2">
+                    <span class="checkmark"></span>
+            </label>
+            <label class="container">12:30
+                    <input type="radio" name="sun_meet_time" value="sun3">
+                    <span class="checkmark"></span>
+            </label>
+            <label class="container">All
+                    <input type="radio" name="sun_meet_time" value="">
+                    <span class="checkmark"></span>
+            </label>
+        </div>            
+        <button class="btn" onclick="PrintText('service2','radio2','sun_meet_time','service_text2')"> 取得文字</button>
+        <textarea id="service_text2" rows="10" cols="75" class="servicetext " ></textarea>
+    </div>                
+    <div id="service1" class="tabcontent">
+        <span onclick="this.parentElement.style.display='none'" class="topright">&times</span>
+        <h3>主日服事(周六)</h3>
+        <p>請選擇服事崗位</p>
+        <div>
+            <label class="container">主日攝影
+                    <input type="radio" checked="checked" name="radio1" value="主日攝影">
+                    <span class="checkmark"></span>
+            </label>
+            <label class="container">主日剪輯
+                    <input type="radio" checked="checked" name="radio1" value="主日剪輯">
+                    <span class="checkmark"></span>
+            </label>
+            <label class="container">導播
+                    <input type="radio" checked="checked" name="radio1" value="導播">
+                    <span class="checkmark"></span>
+            </label>
+        </div>        
+        <p>請選擇服事時間</p>
+        <div>
+            <label class="container">14:00
+                    <input type="radio" checked="checked" name="sat_meet_time" value="sat1">
+                    <span class="checkmark"></span>
+            </label>
+            <label class="container">17:00
+                    <input type="radio" name="sat_meet_time" value="sat2">
+                    <span class="checkmark"></span>
+            </label>            
+            <label class="container">All
+                    <input type="radio" name="sat_meet_time" value="">
+                    <span class="checkmark"></span>
+            </label>
+        </div>            
+        <button class="btn" onclick="PrintText('service1','radio1','sat_meet_time','service_text')"> 取得文字</button>
+        <textarea id="service_text" rows="10" cols="75" class="servicetext " ></textarea>        
+        <!-- <a id="line_share_s1" href='#' target='_blank'><img src='https://media.line.me/img/button/zh-hant/40x40.png' width='20' height='20' alt='用LINE傳送' ></a>       -->
+    </div>
+            
+    <script>
+    function openCity(evt, cityName) {
+        var i, tabcontent, tablinks;        
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+    
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+
+    function PrintText(t_id,r_id,s_time_id,service_text_id){
+        var radios = document.getElementsByName(r_id);
+        let s_time = document.getElementsByName(s_time_id);
+        let r_name = "";
+        let s_time_value = "";
+        let print_t = "";
+        let transfer_print_t ="";
+        for (var i = 0, length = radios.length; i < length; i++)
+        {
+            if (radios[i].checked)
+            {               
+                r_name=radios[i].value;               
+                break;
+            }
+        }
+        for (var i = 0, length = s_time.length; i < length; i++)
+        {
+            if (s_time[i].checked)
+            {               
+                s_time_value=s_time[i].value;               
+                break;
+            }
+        }
+
+        switch (t_id){
+            case "pray":
+                print_t ="【動態攝影團隊】禱告會服事提醒\n提醒您將於本週四禱告會中服事-" + r_name +"。\n請於19:00前架設並完成攝影機相關設定。\n\n【提醒】如有任何狀況和疑問，請記得提前通知昌憶(0917-975170)。";
+                break;                
+            case "service1":
+                print_t = "【動態攝影團隊】主日服事提醒(週六)\n提醒您將於本週六主日中服事-" + r_name +"，服裝請穿著全黑(方便行動的服裝)出席服事。\n集合時間：";                                                       
+                //document.getElementById("line_share_s1").href = "http://line.me/R/msg/text/?" + transfer_print_t + "";                          
+                switch(s_time_value){
+                    case "sat1":
+                        print_t += "14:00\n集合地點：大會堂舞臺前。(請參與會前聚集)";
+                        break;
+                    case "sat2":
+                        print_t += "17:00\n集合地點：大會堂控台前。";
+                        break;                    
+                    default:
+                        print_t += "\n第一堂為 14:00(請參與在大會堂舞臺前的會前聚集)，第二堂為 17:00。\n集合地點：火把辦公室。";
+                        break;
+                } 
+                break;
+            case "service2":
+                print_t="【動態攝影團隊】主日服事提醒(週日)\n提醒您將於本週日主日中服事-" + r_name +"，服裝請穿著全黑(方便行動的服裝)出席服事。\n集合時間為："
+                switch(s_time_value){
+                    case "sun1":
+                        print_t += "08:00\n集合地點：大會堂舞臺前。(請參與會前聚集)";
+                        break;
+                    case "sun2":
+                        print_t += "10:30\n集合地點：大會堂控台前。";
+                        break;
+                    case "sun3":
+                        print_t += "12:30\n集合地點：大會堂控台前。";
+                        break;
+                    default:
+                        print_t += "\n第一堂: 08:00(請參與在大會堂舞臺前的會前聚集)\n第二堂: 10:30\n第三堂: 12:30\n集合地點：火把辦公室。";
+                        break;
+                }                
+                break;
+            default:
+                break;
+        }
+        document.getElementById(service_text_id).value =print_t;
+        transfer_print_t = print_t.replace(/\n/g,"%0D%0A");
+
+        let share_line = document.getElementById("share_line");
+        if (share_line !== null){
+            share_line.remove();
+        }
+
+        let outdiv = document.getElementById(t_id);
+        let newlink = document.createElement("a");       
+        let href_text = "http://line.me/R/msg/text/?" + transfer_print_t + " ";
+        // alert(href_text);
+        var x = document.createElement("IMG");
+        x.setAttribute("src", "https://1.bp.blogspot.com/-FvoBw8lnlC8/WHgA91RmxiI/AAAAAAAAIvA/CazIGx6Jlp8PJ4pE40kt2XMxwFmeBSdjgCLcB/s1600/168x40.png");
+        x.setAttribute("width", "168");
+        x.setAttribute("height", "40");
+        x.setAttribute("alt", "用LINE傳送");
+        newlink.appendChild(x);  
+        newlink.id = "share_line";              
+        newlink.href = href_text;
+        newlink.target = "_blank";
+        // newlink.setAttribute('href', href_text);
+        outdiv.appendChild(newlink);              
+
+    }
+
+    
+    // 
+    </script>
+</body>
+</html>
